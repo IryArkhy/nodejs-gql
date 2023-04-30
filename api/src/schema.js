@@ -44,6 +44,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    user: User!
     pets(input: PetsInput): [Pet]!
     pet(input: PetInput): Pet
   }
