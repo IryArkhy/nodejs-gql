@@ -13,17 +13,21 @@ module.exports = {
     //   return models.User.findOne();
     // },
     pets(_initialValue, args, { models }, _info) {
-      const { type } = args;
-      return models.Pet.findMany();
+      const { input } = args;
+
+      return models.Pet.findMany(input);
+    },
+    pet(_initialValue, { input }, { models }) {
+      return models.Pet.findOne(input);
     }
   },
   // Mutation: {
     
   // },
   Pet: {
-    id() {
-      return Math.random().toString()
-    }
+    // id() {
+    //   return Math.random().toString()
+    // }
     // img(pet) {
     //   return pet.type === 'DOG'
     //     ? 'https://placedog.net/300/300'

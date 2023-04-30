@@ -5,10 +5,22 @@
   },
   "pet": [
     {
-      "id": "string",
+      "id": "1",
       "createdAt": "number",
-      "name": "string",
-      "type": "string"
+      "name": "Lucy",
+      "type": "cat"
+    },
+    {
+      "id": "2",
+      "createdAt": "number",
+      "name": "Diamond",
+      "type": "dog"
+    },
+    {
+      "id": "3",
+      "createdAt": "number",
+      "name": "Baby",
+      "type": "fish"
     }
   ]
 }

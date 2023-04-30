@@ -8,9 +8,19 @@ const typeDefs = gql`
         friends: [User]! # non null field
     }
 
+    type Shoe {
+        brand: String!
+        size: Int!
+    }
+
+    input ShoesInput {
+        brand: String
+        size: Int
+    }
+
     type Query {
         me: User!
-        # friends: [User]!
+        shoes(input: ShoesInput): [Shoe]!
     }
 `;
 
@@ -23,9 +33,12 @@ const resolvers = {
                 friends: [],
             }
         },
-        // friends() {
-        //     return []
-        // }
+        shoes(_, { input }) {
+            return [
+                { brand: 'Nike', size: 12 },
+                { brand: 'Adiddas', size: 14 }
+            ].filter(s => s.brand === input.brand)
+        }
     }
 };
 
