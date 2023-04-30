@@ -2,6 +2,8 @@ const { ApolloServer } = require('apollo-server');
 const gql = require('graphql-tag');
 
 const typeDefs = gql`
+    union Animal = Cat | Snake
+
     """
     Do things here to show up in the documentation
     """
@@ -45,6 +47,17 @@ const typeDefs = gql`
         hasGrip: Boolean!
     }
 
+    type Snake {
+        length: Int
+        poison: Boolean
+    }
+
+    type Cat {
+        whiskers: Boolean
+        paws: Boolean
+        color: String
+    }
+
     input ShoesInput {
         brand: ShoeType
         size: Int
@@ -58,6 +71,7 @@ const typeDefs = gql`
     type Query {
         me: User!
         shoes(input: ShoesInput): [Shoe]!
+        animals: [Animal]
     }
 
     type Mutation {
@@ -80,6 +94,20 @@ const resolvers = {
                 { brand: 'TIMBERlAND', size: 14, hasGrip: true }
             ]
         },
+        animals() {
+            return [
+                {   
+                    whiskers: true,
+                    paws: true,
+                    color: 'black'
+                },
+                {
+                    length: 10,
+                    poison: true
+                }
+            ]
+        }
+        
     },
     Mutation: {
         newShoe(_, { input }, context) {
@@ -88,8 +116,14 @@ const resolvers = {
     },
     Shoe: {
         __resolveType(shoe) {
-            if(shoe.sport) return 'Sneaker'
+            if (shoe.sport) return 'Sneaker'
             return 'Boot'
+        }
+    },
+    Animal: {
+        __resolveType(animal) {
+            if (animal.whiskers) return 'Cat'
+            return 'Snake'
         }
     }
 };
@@ -116,6 +150,19 @@ server.listen(4000)
     }
     ... on Boot {
         hasGrip
+        __typename
+    }
+  }
+}
+ * Syntax for quering unions
+ {
+  animals {
+    ... on Cat {
+      whiskers
+      __typename
+    }
+    ... on Snake {
+        length
         __typename
     }
   }
