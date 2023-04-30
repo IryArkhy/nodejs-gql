@@ -18,9 +18,18 @@ const typeDefs = gql`
         size: Int
     }
 
+    input NewShoeInput {
+        brand: String!
+        size: Int!        
+    }
+
     type Query {
         me: User!
         shoes(input: ShoesInput): [Shoe]!
+    }
+
+    type Mutation {
+        newShoe(input: NewShoeInput!): Shoe!
     }
 `;
 
@@ -35,9 +44,14 @@ const resolvers = {
         },
         shoes(_, { input }) {
             return [
-                { brand: 'Nike', size: 12 },
-                { brand: 'Adiddas', size: 14 }
+                { brand: 'nike', size: 12 },
+                { brand: 'adiddas', size: 14 }
             ].filter(s => s.brand === input.brand)
+        },
+    },
+    Mutation: {
+        newShoe(_, { input }, context) {
+            return input
         }
     }
 };

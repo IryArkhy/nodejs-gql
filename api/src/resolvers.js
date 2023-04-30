@@ -5,13 +5,9 @@
 
 module.exports = {
   Query: {
-    // demo(_, args, contextObject) {
-    //   const  { models } = contextObject;
-    //   // models.Pet.findMany({})
-    // },
-    // user(_, args, { models }) {
-    //   return models.User.findOne();
-    // },
+    user(_, args, { models }) {
+      return models.User.findOne();
+    },
     pets(_initialValue, args, { models }, _info) {
       const { input } = args;
 
@@ -21,9 +17,18 @@ module.exports = {
       return models.Pet.findOne(input);
     }
   },
-  // Mutation: {
-    
-  // },
+  Mutation: {
+    newPet(_, { input }, context) {
+      return context.models.Pet.create(input);
+    },
+    updatePet(_, { input }, context) {
+      const { id, ...restData } = input;
+      return context.models.Pet.updateOne(id, restData);
+    },
+    deletePet(_, { input }, context) {
+      return context.models.Pet.deleteOne(id);
+    }
+  },
   Pet: {
     // id() {
     //   return Math.random().toString()
