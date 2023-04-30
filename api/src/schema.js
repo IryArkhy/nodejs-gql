@@ -4,22 +4,30 @@ const { gql } = require('apollo-server')
  * Type Definitions for our Schema using the SDL.
  */
 const typeDefs = gql`
+  enum PetType {
+    DOG
+    CAT
+    FISH
+  }
+
   type User {
     id: ID! #GQL doesnt check if it's unique and doesn't know it should be unique
     username: String!
+    pets: [Pet]!
   }
 
   type Pet {
     id: ID!
     createdAt: String!
     name: String!
-    type: String!
+    type: PetType!
     img(height: String, width: String): String
+    owner: User!
   }
 
   input PetsInput {
     name: String
-    type: String
+    type: PetType
   }
 
   input PetInput {
@@ -29,13 +37,13 @@ const typeDefs = gql`
   input NewPetInput {
     name: String!
     type: String!
-    img: String
+    img: PetType
   }
 
   input UpdatePetInput {
     id: ID!
     name: String
-    type: String
+    type: PetType
     img: String
   }
 

@@ -30,16 +30,20 @@ module.exports = {
     }
   },
   Pet: {
-    // id() {
-    //   return Math.random().toString()
-    // }
-    // img(pet) {
-    //   return pet.type === 'DOG'
-    //     ? 'https://placedog.net/300/300'
-    //     : 'http://placekitten.com/300/300'
-    // }
+    owner(pet, _args, context) {
+      const user = context.models.User.findOne()
+      return user;
+    },
+    img(pet) {
+      return pet.type === 'DOG'
+        ? 'https://placedog.net/300/300'
+        : 'http://placekitten.com/300/300'
+    }
   },
-  // User: {
-    
-  // }
+  User: {
+    pets(user, _args, context) {
+      const pets = context.models.Pet.findMany({ userID: user.id });
+      return pets;
+    }
+  }
 }

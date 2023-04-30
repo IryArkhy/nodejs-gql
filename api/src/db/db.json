@@ -8,26 +8,30 @@
       "id": "1",
       "createdAt": "number",
       "name": "Lucy",
-      "type": "cat"
+      "type": "CAT",
+      "userID": "jBWMVGjm50l6LGwepDoty"
     },
     {
       "id": "2",
       "createdAt": "number",
       "name": "Diamond",
-      "type": "dog"
+      "type": "DOG",
+      "userID": "jBWMVGjm50l6LGwepDoty"
     },
     {
       "id": "3",
       "createdAt": "number",
       "name": "Baby",
-      "type": "fish"
+      "type": "FISH",
+      "userID": "jBWMVGjm50l6LGwepDoty"
     },
     {
       "id": "CeGBkDdHXeUzhk33G_IVW",
       "createdAt": 1682869773888,
       "name": "Rori",
-      "type": "cat",
-      "img": "https://cat.png"
+      "type": "CAT",
+      "img": "https://cat.png",
+      "userID": "jBWMVGjm50l6LGwepDoty"
     }
   ]
 }

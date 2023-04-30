@@ -1,6 +1,18 @@
 const { ApolloServer } = require('apollo-server');
 const gql = require('graphql-tag');
 
+const user = {
+    id: 1,
+    email: 'yoda@mail.com',
+    avatar: 'https://yoda.png',
+    shoes: []
+};
+
+const shoes = [
+    { brand: 'NIKE', size: 12, sport: 'football', userID: 1 },
+    { brand: 'TIMBERlAND', size: 14, hasGrip: true, userID: 1 }
+];
+
 const typeDefs = gql`
     union Animal = Cat | Snake
 
@@ -15,15 +27,18 @@ const typeDefs = gql`
     }
 
     type User {
+        id: ID!
         email: String!
         avatar: String!
-        friends: [User]! # non null field
+        # friends: [User]! # non null field
+        shoes: [Shoe]! #cyclic direct dependency
     }
 
     # For common fields
     interface Shoe {
         brand: ShoeType!
         size: Int!
+        user: User!
     }
     # type Shoe {
     #     brand: ShoeType!
@@ -39,12 +54,14 @@ const typeDefs = gql`
         brand: ShoeType!
         size: Int!
         sport: String!
+        user: User!
     }
 
     type Boot implements Shoe {
         brand: ShoeType!
         size: Int!
         hasGrip: Boolean!
+        user: User!
     }
 
     type Snake {
@@ -83,16 +100,14 @@ const resolvers = {
     Query: {
         me() {
             return {
+                id: 1,
                 email: 'yoda@mail.com',
                 avatar: 'https://yoda.png',
-                friends: [],
+                shoes: []
             }
         },
-        shoes(_, { input }) {
-            return [
-                { brand: 'NIKE', size: 12, sport: 'football' },
-                { brand: 'TIMBERlAND', size: 14, hasGrip: true }
-            ]
+        shoes(_, { input }, info) {
+            return shoes;
         },
         animals() {
             return [
@@ -118,12 +133,28 @@ const resolvers = {
         __resolveType(shoe) {
             if (shoe.sport) return 'Sneaker'
             return 'Boot'
+        },
+    },
+    Sneaker: {
+        user(shoe) {
+            return user;
+        }
+    },
+    Boot: {
+        user(shoe) {
+            return user;
         }
     },
     Animal: {
         __resolveType(animal) {
             if (animal.whiskers) return 'Cat'
             return 'Snake'
+        }
+    },
+    User: {
+        shoes(user) {
+            //TODO: get user id and get all the shoes from DB that have this user id
+            return shoes;
         }
     }
 };
