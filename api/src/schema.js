@@ -17,8 +17,11 @@ const typeDefs = gql`
   }
 
   type Query {
-    pets: [Pet]!
+    pets(type: String!): [Pet]!
   }
 `;
 
 module.exports = typeDefs
+
+// Arguments could be added to a query as well as to a specific field.
+// They have to be either Scalars or Input types

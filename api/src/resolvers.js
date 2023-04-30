@@ -12,7 +12,8 @@ module.exports = {
     // user(_, args, { models }) {
     //   return models.User.findOne();
     // },
-    pets(_initialValue, _args, { models }, _info) {
+    pets(_initialValue, args, { models }, _info) {
+      const { type } = args;
       return models.Pet.findMany();
     }
   },
