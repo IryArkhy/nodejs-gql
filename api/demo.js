@@ -5,11 +5,12 @@ const typeDefs = gql`
     type User {
         email: String!
         avatar: String!
-        friends: [User]!
+        friends: [User]! # non null field
     }
 
     type Query {
         me: User!
+        # friends: [User]!
     }
 `;
 
@@ -21,12 +22,15 @@ const resolvers = {
                 avatar: 'https://yoda.png',
                 friends: [],
             }
-        }
+        },
+        // friends() {
+        //     return []
+        // }
     }
 };
 
 const server = new ApolloServer({
-    typeDefs,
+    typeDefs, // could be an array
     resolvers,
 });
 

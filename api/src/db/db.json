@@ -3,5 +3,12 @@
     "id": "jBWMVGjm50l6LGwepDoty",
     "username": "frontendmaster"
   },
-  "pet": []
+  "pet": [
+    {
+      "id": "string",
+      "createdAt": "number",
+      "name": "string",
+      "type": "string"
+    }
+  ]
 }
