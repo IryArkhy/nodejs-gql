@@ -1,9 +1,10 @@
-import { ApolloClient } from 'apollo-client'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-import { HttpLink } from 'apollo-link-http'
-import gql from 'graphql-tag'
+import { ApolloClient, InMemoryCache, } from '@apollo/client'
 
+const cache = new InMemoryCache();
 
-const client = new ApolloClient()
+const client = new ApolloClient({
+    uri: ' http://localhost:4000',
+    cache,
+})
 
-export default client
+export default client;

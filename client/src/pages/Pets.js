@@ -1,18 +1,33 @@
 import React, {useState} from 'react'
-import gql from 'graphql-tag'
 import PetBox from '../components/PetBox'
 import NewPet from '../components/NewPet'
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation, gql } from '@apollo/client'
 import Loader from '../components/Loader'
 
+const getPetsQuery = gql`
+  query getPets {
+    pets {
+      id
+      img
+      type
+      name
+      owner {
+        id,
+        username
+      }
+    }
+  }
+`;
+
 export default function Pets () {
-  const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false);
+  const { data } = useQuery(getPetsQuery);
   
   const onSubmit = input => {
     setModal(false)
-  }
+  };
 
-  const petsList = pets.data.pets.map(pet => (
+  const petsList = data.pets.map(pet => (
     <div className="col-xs-12 col-md-4 col" key={pet.id}>
       <div className="box">
         <PetBox pet={pet} />
